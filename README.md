@@ -26,7 +26,7 @@ In order to control the bot you must add your Tox ID to the masterkeys file. Onc
 * `statusmessage <msg>` - Sets status message of the ToxBot
 * `title <n> <msg>` - Sets title for groupchat n
 
-### Notes:
+### Notes
 * ToxBot will automatically accept a groupchat invite from a master
 * Message strings must be enclosed in double quotes
 
