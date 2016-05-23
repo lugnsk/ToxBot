@@ -75,7 +75,7 @@ static void cmd_default(Tox *m, int friendnum, int argc, char (*argv)[MAX_COMMAN
 
     char msg[MAX_COMMAND_LENGTH];
     snprintf(msg, sizeof(msg), "Default room number set to %d", groupnum);
-    tox_friend_send_message(m, friendnum, TOX_MESSAGE_TYPE_NORMAL, (uint8_t *) msg, strlen(msg), NULL);
+    send_msg(m, friendnum, msg);
 
     char name[TOX_MAX_NAME_LENGTH];
     tox_friend_get_name(m, friendnum, (uint8_t *) name, NULL);
@@ -315,7 +315,7 @@ static void cmd_invite(Tox *m, int friendnum, int argc, char (*argv)[MAX_COMMAND
 
     if (tox_invite_friend(m, friendnum, groupnum) == -1) {
         fprintf(stderr, "Failed to invite %s to group %d\n", name, groupnum);
-		send_msg(m, friendnum, "Invite failed. Please report this problem on irc #tox@freenode.");
+		send_msg(m, friendnum, "Invite failed.");
         return;
     }
 

@@ -4,7 +4,7 @@ ToxBot is a remotely controlled [Tox](https://tox.chat) bot whose purpose is to 
 Although current functionality is barebones, it will be easy to expand the bot to act in more comprehensive ways once Tox group chats are fully implemented (e.g. admin duties); this was the main motivation behind creating a proper Tox bot.
 
 ## Controlling
-In order to control the bot you must add your Tox ID to the masterkeys file. Once you add the bot as a friend, you can send it privileged commands as normal messages; there is no front-end.
+In order to control the bot you must add your Tox ID to the masterkeys file. Once you add the bot as a friend, you can send it privileged commands as normal messages.
 
 ### Non-privileged commands
 * `help` - Print this message
@@ -27,8 +27,8 @@ In order to control the bot you must add your Tox ID to the masterkeys file. Onc
 * `title <n> <msg>` - Sets title for groupchat n
 
 ### Notes
-* ToxBot will automatically accept a groupchat invite from a master
-* Message strings must be enclosed in double quotes
+* ToxBot will automatically accept a groupchat invite from a masterkey.
+* Message strings must be enclosed in double quotes.
 
 ## Dependencies
 pkg-config
