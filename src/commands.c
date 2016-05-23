@@ -225,7 +225,7 @@ static void cmd_help(Tox *m, int friendnum, int argc, char (*argv)[MAX_COMMAND_L
     tox_friend_send_message(m, friendnum, TOX_MESSAGE_TYPE_NORMAL, (uint8_t *) outmsg, strlen(outmsg), NULL);
 
     if (friend_is_master(m, friendnum)) {
-        outmsg = "For a list of master commands see the commands.txt file";
+        outmsg = "For a list of master commands see the readme (github.com/expenses/toxbot).";
         tox_friend_send_message(m, friendnum, TOX_MESSAGE_TYPE_NORMAL, (uint8_t *) outmsg, strlen(outmsg), NULL);
     }
 }
