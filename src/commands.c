@@ -732,4 +732,4 @@ int execute(Tox *m, int friendnum, const char *input, int length)
         return -1;
 
     return do_command(m, friendnum, num_args, args);
-a
+}
