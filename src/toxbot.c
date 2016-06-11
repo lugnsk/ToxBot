@@ -384,7 +384,7 @@ static Tox *init_tox(void)
     size_t n_len = tox_self_get_name_size(m);
 
     if (n_len == 0)
-        tox_self_set_name(m, (uint8_t *) "ToxBot", strlen("ToxBot"), NULL);
+        tox_self_set_name(m, (uint8_t *) "[LUGNSK]", strlen("[LUGNSK]"), NULL);
 
     return m;
 }
