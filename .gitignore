@@ -9,7 +9,7 @@
 *.app
 *.swp
 *.orig
-*.sublime-project
+*.sublime*
 toxbot
 masterkeys
 toxbot_save
