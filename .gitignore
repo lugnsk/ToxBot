@@ -1,3 +1,4 @@
+.gotignore
 *~
 *.swp
 *.o
@@ -8,6 +9,7 @@
 *.app
 *.swp
 *.orig
+*.sublime-project
 toxbot
 masterkeys
 toxbot_save
