@@ -41,8 +41,8 @@
 #include "commands.h"
 #include "toxbot.h"
 #include "groupchats.h"
+#include "version.h"
 
-#define VERSION "0.0.2"
 #define FRIEND_PURGE_INTERVAL 3600
 #define GROUP_PURGE_INTERVAL 3600
 
