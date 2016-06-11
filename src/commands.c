@@ -191,14 +191,27 @@ static void cmd_group(Tox *m, int friendnum, int argc, char (*argv)[MAX_COMMAND_
 
 static void cmd_help(Tox *m, int friendnum, int argc, char (*argv)[MAX_COMMAND_LENGTH])
 {
-    send_msg(m, friendnum, "info : Print my current status and list active group chats");
-    send_msg(m, friendnum, "id : Print my Tox ID");
-    send_msg(m, friendnum, "invite : Request invite to default group chat");
-    send_msg(m, friendnum, "invite <n> <p> : Request invite to group chat n (with password p if protected)");
-    send_msg(m, friendnum, "group <type> <pass> : Creates a new groupchat with type: text | audio (optional password)");
+    char msg[MAX_COMMAND_LENGTH];
+    strcpy(msg, " × info\t\t: Print my current status and list active group chats\n");
+    strcat(msg, " × id\t\t: Print my Tox ID\n");
+    strcat(msg, " × invite\t\t: Request invite to default group chat\n");
+    strcat(msg, " × invite <n> <p>\t: Request invite to group chat n (with Password if protected)\n");
+    strcat(msg, " × group <t> <p>\t: Creates a new groupchat with Type: text | audio (optional Password)");
+    send_msg(m, friendnum, msg);
 
     if (friend_is_master(m, friendnum)) {
-		send_msg(m, friendnum, "For a list of master commands see the readme (github.com/expenses/toxbot)");
+        strcpy(msg, "ToxBot Master Commands:\n");
+        strcat(msg, " × default <n>\t\t: Sets default groupchat room to n\n");
+        strcat(msg, " × gmessage <n> <msg>\t: Sends msg to groupchat n\n");
+        strcat(msg, " × leave <n>\t\t: Leaves groupchat n\n");
+        strcat(msg, " × master <id>\t\t: Adds Tox ID to the masterkeys file\n");
+        strcat(msg, " × name <name>\t\t: Sets name\n");
+        strcat(msg, " × passwd <n> <pass>\t\t: Sets password for groupchat n (leave pass blank for no password)\n");
+        strcat(msg, " × purge <n>\t\t: Sets the number of days before an inactive friend is deleted\n");
+        strcat(msg, " × status <s>\t\t: Sets status (online, busy or away)\n");
+        strcat(msg, " × statusmessage <msg>\t: Sets status message\n");
+        strcat(msg, " × title <n> <msg>\t\t: Sets title for groupchat n");
+        send_msg(m, friendnum, msg);
     }
 }
 
@@ -223,18 +236,25 @@ static void cmd_info(Tox *m, int friendnum, int argc, char (*argv)[MAX_COMMAND_L
 {
     char outmsg[MAX_COMMAND_LENGTH];
     char timestr[64];
+    char msg[MAX_COMMAND_LENGTH];
 
     uint64_t curtime = (uint64_t) time(NULL);
     get_elapsed_time_str(timestr, sizeof(timestr), curtime - Tox_Bot.start_time);
-    snprintf(outmsg, sizeof(outmsg), "Uptime: %s", timestr);
-    send_msg(m, friendnum, outmsg);
+    snprintf(msg, sizeof(msg), "Uptime: %s\n", timestr);
+    strcpy(outmsg, msg);
+    // send_msg(m, friendnum, outmsg);
 
     uint32_t numfriends = tox_self_get_friend_list_size(m);
-    snprintf(outmsg, sizeof(outmsg), "Friends: %d (%d online)", numfriends, Tox_Bot.num_online_friends);
-    send_msg(m, friendnum, outmsg);
+    snprintf(msg, sizeof(msg), "Friends: %d (%d online)\n", numfriends, Tox_Bot.num_online_friends);
+    strcat(outmsg, msg);
+    // send_msg(m, friendnum, outmsg);
 
-    snprintf(outmsg, sizeof(outmsg), "Inactive friends are purged after %"PRIu64" days",
+    snprintf(msg, sizeof(msg), "Inactive friends are purged after %"PRIu64" days\n",
                                       Tox_Bot.inactive_limit / SECONDS_IN_DAY);
+    strcat(outmsg, msg);
+    // send_msg(m, friendnum, outmsg);
+
+    strcat(outmsg, "Tox ID of admin of this bot is: 06F0A900ECAD7402F60E8F17D04AFE0778E1AD4AD254A7DC9E5425123A31686BA9C6F868789A");
     send_msg(m, friendnum, outmsg);
 
     /* List active group chats and number of peers in each */
@@ -257,6 +277,7 @@ static void cmd_info(Tox *m, int friendnum, int argc, char (*argv)[MAX_COMMAND_L
 
     uint32_t i;
 
+    strcpy(outmsg, "");
     for (i = 0; i < numchats; ++i) {
         uint32_t groupnum = groupchat_list[i];
         int num_peers = tox_group_number_peers(m, groupnum);
@@ -266,11 +287,11 @@ static void cmd_info(Tox *m, int friendnum, int argc, char (*argv)[MAX_COMMAND_L
             const char *title = Tox_Bot.g_chats[idx].title_len
                               ? Tox_Bot.g_chats[idx].title : "None";
             const char *type = tox_group_get_type(m, groupnum) == TOX_GROUPCHAT_TYPE_TEXT ? "Text" : "Audio";
-            snprintf(outmsg, sizeof(outmsg), "Group %d | %s | peers: %d | Title: %s", groupnum, type,
-                                                                                      num_peers, title);
-			send_msg(m, friendnum, outmsg);
+            snprintf(msg, sizeof(msg), "Group %d | %s | peers: %d | Title: %s\n", groupnum, type, num_peers, title);
+            strcat(outmsg, msg);
         }
     }
+    send_msg(m, friendnum, outmsg);
 
     free(groupchat_list);
 }
